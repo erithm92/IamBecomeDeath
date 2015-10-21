@@ -11,12 +11,18 @@ public class Player : MonoBehaviour
 	public GameObject mainCam;
 	public float rotSpeed = 50;
 	public List<GameObject> oilSlick = new List<GameObject> ();
-	public float health = 100; 
+	public float health = 100;
+	public GameObject fireLight, fireLight2;
+	Light fire, fire2;
 	// Use this for initialization
 	void Start () 
 	{
-
+		//fireLight.SetActive (false);
+		fire = fireLight.GetComponent<Light> ();
+		fire2 = fireLight2.GetComponent<Light> ();
 		rb = GetComponent<Rigidbody> ();
+		fire.enabled = false;
+		fire2.enabled = false;
 	}
 	
 	// Update is called once per frame
@@ -48,10 +54,16 @@ public class Player : MonoBehaviour
 		if (Input.GetKeyDown (KeyCode.Mouse0)) 
 		{
 			flameSpawn.GetComponent<ParticleSystem>().Play();
+			//fireLight.SetActive(true);
+			fire.enabled = true;
+			fire2.enabled = true;
 		}
 		if (Input.GetKeyUp (KeyCode.Mouse0)) 
 		{
 			flameSpawn.GetComponent<ParticleSystem>().Stop();
+			//fireLight.SetActive(false);
+			fire.enabled = false;
+			fire2.enabled = false;
 		}
 		if (Input.GetKeyDown (KeyCode.Mouse1)) 
 		{
@@ -59,14 +71,19 @@ public class Player : MonoBehaviour
 			flameSpawn.GetComponent<ParticleSystem>().startSpeed +=3;
 			flameSpawn.GetComponent<ParticleSystem>().startSize +=1.5f;
 			flameSpawn.GetComponent<ParticleSystem>().Play();
+			fire.enabled = true;
+			fire2.enabled = true;
 		}
 		if (Input.GetKeyUp (KeyCode.Mouse1)) 
 		{
 			flameSpawn.GetComponent<ParticleSystem>().emissionRate -=3;
 			flameSpawn.GetComponent<ParticleSystem>().startSpeed -=3;
 			flameSpawn.GetComponent<ParticleSystem>().startSize -=1.5f;
-			flameSpawn.GetComponent<ParticleSystem>().Play();
 			flameSpawn.GetComponent<ParticleSystem>().Stop();
+			//fireLight.SetActive(false);
+			fire.enabled = false;
+			fire2.enabled = false;
+
 		}
 		RotateToMouse ();
 
